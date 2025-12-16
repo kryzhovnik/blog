@@ -4,8 +4,10 @@ title: About
 permalink: /about/
 ---
 
-# About
+I'm Andrey Samsonov, a full-stack software developer, living in Serbia, Novi Sad
 
-This is a simple technical blog built with Jekyll.
+I build reliable, pragmatic Ruby on Rails products that keep everyday work simple. For 14+ years, I've been shipping and maintaining customer-facing apps with substantial internal back-office functionality—often solo, for small businesses that can't afford a big team.
 
-Write a bit about yourself here: your background, what you do, what topics you plan to cover.
+Currently, I'm building an agentic education app—exploring how technology can make personalized learning a reality.
+
+[andrey.samsonov@gmail.com](mailto:andrey.samsonov@gmail.com) – [@kryzhovnikme](https://t.me/kryzhovnikme) – [+381 62 975 7062](tel:381629757062)
