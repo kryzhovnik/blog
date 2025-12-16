@@ -1,0 +1,22 @@
+title: Tech notes
+description: A simple technical blog
+author: Andrey Samsonov
+url: ""
+baseurl: ""
+
+permalink: /:title/
+
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+sass:
+  style: compressed
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
