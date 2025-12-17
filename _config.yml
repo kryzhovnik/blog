@@ -4,7 +4,7 @@ author: Andrey Samsonov
 url: "https://msg.samsonov.io"
 baseurl: ""
 
-permalink: /:title/
+permalink: /:year-:month-:day-:title/
 
 markdown: kramdown
 highlighter: rouge
