@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Diving into Fizzy's Routes: Rails' Hidden resolve Feature"
+title: "Diving into Fizzy's Routes: Rails' resolve and direct"
 date: 2025-12-16
 ---
 
