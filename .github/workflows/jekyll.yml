@@ -18,6 +18,8 @@ jobs:
         with:
           ruby-version: '3.3'
           bundler-cache: true
+      - name: Install libvips
+        run: sudo apt-get install -y libvips
       - name: Build site
         run: bundle exec jekyll build
       - uses: actions/upload-pages-artifact@v3

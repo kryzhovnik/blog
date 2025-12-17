@@ -13,6 +13,18 @@ kramdown:
   input: GFM
   syntax_highlighter: rouge
 
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-og-image
+
+og_image:
+  output_dir: "assets/images/og"
+  domain: "msg.samsonov.io"
+  image: "/assets/images/avatar.png"
+  force: true
+  verbose: true
+
 exclude:
   - Gemfile
   - Gemfile.lock
