@@ -98,13 +98,13 @@ end
 
 ### Customizing Polymorphic URLs with `resolve`
 
-The [Rails docs](https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/CustomUrls.html#method-i-resolve) dedicate about two sentences to resolve: "Define custom polymorphic mappings of models to URLs" and a brief example with a Basket model. For something this useful, it deserves more explanation.
+The [Rails docs](https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/CustomUrls.html#method-i-resolve) dedicate about two sentences to `resolve`: "Define custom polymorphic mappings of models to URLs" and a brief example with a Basket model.
 
 You know how `link_to @post` generates `/posts/123`? That's `polymorphic_url` under the hood — Rails introspects the model and finds the matching route.
 
 But what happens when a model doesn't have its own route? Comments in Fizzy don't live at /comments/:id — they're displayed on their parent Card. Events are polymorphic wrappers around other actions. Notifications point to something else the user should see.
 
-Without resolve, you'd write helpers like this everywhere:
+Without `resolve`, you'd write helpers like this everywhere:
 
 ```ruby
 # app/helpers/comments_helper.rb
@@ -113,7 +113,7 @@ def comment_url(comment)
 end
 ```
 
-And then remember to call `comment_url(comment)` instead of `url_for(comment)`. The resolve DSL fixes this — it teaches Rails how to generate URLs for specific model classes, keeping route logic in routes.rb where you'd naturally look for it.
+And then remember to call `comment_url(comment)` instead of `url_for(comment)`. The `resolve` DSL fixes this — it teaches Rails how to generate URLs for specific model classes, keeping route logic in routes.rb where you'd naturally look for it.
 
 The block receives:
 1. The model instance
@@ -125,8 +125,8 @@ Both live in the same [CustomUrls module](https://api.rubyonrails.org/classes/Ac
 
 <div class="collapsible">
 <div class="collapsible-header">
-  <strong>Under the Hood: How resolve Actually Works</strong>
-  <span class="collapsible-subheader">Step-by-step source code walkthrough</span>
+  <p class="collapsible-title">Under the Hood: How resolve Actually Works</p>
+  <p class="collapsible-subtitle">Step-by-step source code walkthrough</p>
 </div>
 <div class="collapsible-content" markdown="1">
 
