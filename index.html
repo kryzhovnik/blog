@@ -7,8 +7,11 @@ title: Home
   <li>
     <a href="{{ post.url | relative_url }}">
       <h2>{{ post.title }}</h2>
-      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
     </a>
+    {% if post.description %}
+    <p class="post-description">{{ post.description }}</p>
+    {% endif %}
+    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
   </li>
   {% endfor %}
 </ul>

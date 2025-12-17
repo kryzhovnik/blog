@@ -134,9 +134,16 @@ a {
     }
   }
 
+  & .post-description {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin: 0.25rem 0 0.5rem 0;
+    line-height: 1.5;
+  }
+
   & time {
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 }
 
@@ -286,8 +293,38 @@ blockquote {
   }
 }
 
+/* About page */
+.about-intro {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.about-text {
+  flex: 1;
+}
+
+.about-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .about-intro {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .about-avatar {
+    width: 160px;
+    height: 160px;
+  }
+}
+
 .about-blog {
-  margin-top: 4rem;
+  margin-top: 2rem;
 }
 
 /* Footer */
