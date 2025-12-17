@@ -1,5 +1,5 @@
-title: Tech notes
-description: A simple technical blog
+title: Commit Messages
+description: Reflections on code, craft, and the future of software
 author: Andrey Samsonov
 url: ""
 baseurl: ""
@@ -12,9 +12,6 @@ highlighter: rouge
 kramdown:
   input: GFM
   syntax_highlighter: rouge
-
-sass:
-  style: compressed
 
 exclude:
   - Gemfile
