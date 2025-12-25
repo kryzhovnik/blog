@@ -2,3 +2,5 @@ _site/
 .jekyll-cache/
 .sass-cache/
 .jekyll-metadata
+tmp
+.DS_Store

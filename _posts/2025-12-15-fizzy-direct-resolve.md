@@ -3,6 +3,9 @@ layout: post
 title: "Diving into Fizzy's Routes: Rails' resolve and direct"
 date: 2025-12-15
 description: "Exploring two underused Rails routing features — direct and resolve — through 37signals' newly open-sourced Fizzy codebase. Learn how to create custom URL helpers and teach Rails to generate polymorphic URLs for models without their own routes."
+og_image:
+  canvas:
+    background_image: "/assets/images/og-backgrounds/bg-4190.png"
 ---
 
 37signals [open-sourced](https://x.com/dhh/status/1995895084789772629) their latest product last week. I cloned it and started where I always start when exploring a new Rails app: config/routes.rb.

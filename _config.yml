@@ -22,11 +22,12 @@ og_image:
   output_dir: "assets/images/og"
   domain: "msg.samsonov.io"
   image: "/assets/images/avatar.png"
-  force: true
+  force: false
   verbose: true
+  canvas:
+    background_image: "/assets/images/og-backgrounds/default.png"
 
 exclude:
   - Gemfile
   - Gemfile.lock
   - README.md
-  - assets/images/og
