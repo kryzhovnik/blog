@@ -1,0 +1,70 @@
+#!/bin/bash
+# Usage: bin/draft "Post Title" or bin/draft already-slugified
+# Creates _drafts/<slug>.md and _drafts/materials/<slug>/
+
+set -e
+
+if [[ -z "$1" ]]; then
+    echo "Usage: bin/draft <post-title>" >&2
+    exit 1
+fi
+
+title="$1"
+
+# Slugify: detect if already a slug (no spaces, all lowercase, only valid chars)
+if [[ "$title" =~ ^[a-z0-9-]+$ ]]; then
+    slug="$title"
+else
+    # Slugify using perl - decompose Unicode and strip combining marks
+    slug=$(perl -CSDA -MUnicode::Normalize -e '
+        use utf8;
+        $_ = NFD($ARGV[0]);       # Decompose to base + combining marks
+        s/\pM//g;                 # Remove all combining marks (accents)
+        s/&/ and /g;              # Convert & to "and"
+        $_ = lc($_);              # Lowercase
+        s/[ _]/-/g;               # Replace spaces/underscores with hyphens
+        s/[^a-z0-9-]//g;          # Keep only alphanumeric and hyphens
+        s/-+/-/g;                 # Collapse multiple hyphens
+        s/^-|-$//g;               # Remove leading/trailing hyphens
+        print;
+    ' "$title")
+fi
+
+draft_file="_drafts/${slug}.md"
+materials_dir="_drafts/materials/${slug}"
+
+# Check for conflicts
+if [[ -e "$draft_file" ]]; then
+    echo "Error: $draft_file already exists" >&2
+    exit 1
+fi
+
+if [[ -e "$materials_dir" ]]; then
+    echo "Error: $materials_dir already exists" >&2
+    exit 1
+fi
+
+# Create directories
+mkdir -p _drafts/materials
+
+# Create materials directory for this post
+mkdir "$materials_dir"
+
+# Get today's date
+today=$(date +%Y-%m-%d)
+
+# Create draft file with front matter
+cat > "$draft_file" << EOF
+---
+layout: post
+title: "$title"
+date: $today
+description:
+tags: []
+---
+
+EOF
+
+# Output created paths
+echo "$draft_file"
+echo "$materials_dir/"
