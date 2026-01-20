@@ -115,6 +115,23 @@ A -----> B
 7. **Use default scale** (`SCALE=1`) - SVGs are vector and scale naturally
 8. **Place labels beside lines, not crossing them** - put captions above or below arrows, not on the same line
 9. **Don't let arrows touch boxes** - leave a gap between arrow endpoints and box borders
+10. **Use smooth corners for arrows** - use `'` and `.` for rounded turns instead of `+`
+
+### Arrow Corners
+
+**Good - smooth corners:**
+```
+    .---->
+    |
+----'
+```
+
+**Bad - sharp corners:**
+```
+    +---->
+    |
+----+
+```
 
 ### Labels and Arrows
 
