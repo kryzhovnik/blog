@@ -1,0 +1,98 @@
+#!/bin/bash
+# Usage: bin/diagram <input.txt> [output.svg]
+#        bin/diagram - <output.svg>              (read from stdin)
+# Converts ASCII art to SVG using svgbob
+#
+# Options (via environment variables):
+#   SCALE=2           - Scale factor (default: 1)
+#   STROKE_COLOR=red  - Line color (default: black)
+#   FILL_COLOR=blue   - Shape fill color (default: black)
+#   BACKGROUND=none   - Background color (default: white, use 'none' for transparent)
+#   FONT_SIZE=16      - Font size (default: 14)
+#
+# Examples:
+#   bin/diagram diagram.txt                    # Output to assets/images/diagrams/diagram.svg
+#   bin/diagram diagram.txt my-diagram.svg    # Output to assets/images/diagrams/my-diagram.svg
+#   bin/diagram - flow.svg < diagram.txt       # Read from stdin
+#   echo "A --> B" | bin/diagram - simple.svg  # Pipe input
+#   SCALE=2 bin/diagram diagram.txt            # 2x scale
+#   BACKGROUND=none bin/diagram diagram.txt    # Transparent background
+
+set -e
+
+if [[ -z "$1" ]]; then
+    echo "Usage: bin/diagram <input.txt> [output.svg]" >&2
+    echo "       bin/diagram - <output.svg>   (read from stdin)" >&2
+    echo "" >&2
+    echo "Environment variables:" >&2
+    echo "  SCALE=2           - Scale factor (default: 1)" >&2
+    echo "  STROKE_COLOR=red  - Line color (default: black)" >&2
+    echo "  FILL_COLOR=blue   - Shape fill color (default: black)" >&2
+    echo "  BACKGROUND=none   - Background color (default: white)" >&2
+    echo "  FONT_SIZE=16      - Font size (default: 14)" >&2
+    exit 1
+fi
+
+input="$1"
+use_stdin=false
+
+if [[ "$input" == "-" ]]; then
+    use_stdin=true
+    if [[ -z "$2" ]]; then
+        echo "Error: output filename required when reading from stdin" >&2
+        exit 1
+    fi
+elif [[ ! -f "$input" ]]; then
+    echo "Error: Input file '$input' not found" >&2
+    exit 1
+fi
+
+# Determine output filename
+if [[ -n "$2" ]]; then
+    output_name="$2"
+else
+    # Use input filename with .svg extension
+    output_name="$(basename "${input%.*}").svg"
+fi
+
+# Ensure output directory exists
+output_dir="assets/images/diagrams"
+mkdir -p "$output_dir"
+
+output_path="$output_dir/$output_name"
+
+# Build svgbob options
+opts=()
+
+if [[ -n "$SCALE" ]]; then
+    opts+=(--scale "$SCALE")
+fi
+
+if [[ -n "$STROKE_COLOR" ]]; then
+    opts+=(--stroke-color "$STROKE_COLOR")
+fi
+
+if [[ -n "$FILL_COLOR" ]]; then
+    opts+=(--fill-color "$FILL_COLOR")
+fi
+
+if [[ -n "$BACKGROUND" ]]; then
+    if [[ "$BACKGROUND" == "none" ]]; then
+        opts+=(--background "transparent")
+    else
+        opts+=(--background "$BACKGROUND")
+    fi
+fi
+
+if [[ -n "$FONT_SIZE" ]]; then
+    opts+=(--font-size "$FONT_SIZE")
+fi
+
+# Convert
+if [[ "$use_stdin" == true ]]; then
+    svgbob -o "$output_path" "${opts[@]}"
+else
+    svgbob "$input" -o "$output_path" "${opts[@]}"
+fi
+
+echo "$output_path"
