@@ -1,0 +1,23 @@
+              .---------------.
+              |     Share     |
+              |   Extension   |
+              '-------+-------'
+                      |
+                      | show
+                      v
+              .---------------.
+              |     OAuth     |
+              |    WebView    |
+              '-------.-------'
+                      |
+                      | user sign in
+                      | get token
+                      |
+        .-------------+-------------.
+        |                           |
+        | save token                | POST
+        v                           | Bearer token
+.---------------.                   v
+|    Shared     |             .----------.
+|   Keychain    |             | Your API |
+'---------------'             '----------'

@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="496" height="336" class="svgbob">
+  <style>.svgbob line, .svgbob path, .svgbob circle, .svgbob rect, .svgbob polygon {
+  stroke: black;
+  stroke-width: 2;
+  stroke-opacity: 1;
+  fill-opacity: 1;
+  stroke-linecap: round;
+  stroke-linejoin: miter;
+}
+
+.svgbob text {
+  white-space: pre;
+  fill: black;
+  font-family: Iosevka Fixed, monospace;
+  font-size: 14px;
+}
+
+.svgbob rect.backdrop {
+  stroke: none;
+  fill: white;
+}
+
+.svgbob .broken {
+  stroke-dasharray: 8;
+}
+
+.svgbob .filled {
+  fill: black;
+}
+
+.svgbob .bg_filled {
+  fill: white;
+  stroke-width: 1;
+}
+
+.svgbob .nofill {
+  fill: white;
+}
+
+.svgbob .end_marked_arrow {
+  marker-end: url(#arrow);
+}
+
+.svgbob .start_marked_arrow {
+  marker-start: url(#arrow);
+}
+
+.svgbob .end_marked_diamond {
+  marker-end: url(#diamond);
+}
+
+.svgbob .start_marked_diamond {
+  marker-start: url(#diamond);
+}
+
+.svgbob .end_marked_circle {
+  marker-end: url(#circle);
+}
+
+.svgbob .start_marked_circle {
+  marker-start: url(#circle);
+}
+
+.svgbob .end_marked_open_circle {
+  marker-end: url(#open_circle);
+}
+
+.svgbob .start_marked_open_circle {
+  marker-start: url(#open_circle);
+}
+
+.svgbob .end_marked_big_open_circle {
+  marker-end: url(#big_open_circle);
+}
+
+.svgbob .start_marked_big_open_circle {
+  marker-start: url(#big_open_circle);
+}
+
+</style>
+  <defs>
+    <marker id="arrow" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0,0 0,4 4,2 0,0"></polygon>
+    </marker>
+    <marker id="diamond" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0,2 2,0 4,2 2,4 0,2"></polygon>
+    </marker>
+    <marker id="circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <circle cx="4" cy="4" r="2" class="filled"></circle>
+    </marker>
+    <marker id="open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <circle cx="4" cy="4" r="2" class="bg_filled"></circle>
+    </marker>
+    <marker id="big_open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <circle cx="4" cy="4" r="3" class="bg_filled"></circle>
+    </marker>
+  </defs>
+  <rect class="backdrop" x="0" y="0" width="496" height="336"></rect>
+  <!-- Colored backgrounds -->
+  <rect x="4" y="8" width="112" height="64" fill="#e8f4fc" rx="4"></rect>
+  <rect x="284" y="152" width="144" height="48" fill="#e8f5e9" rx="4"></rect>
+  <rect x="300" y="8" width="112" height="48" class="solid nofill" rx="4"></rect>
+  <text x="330" y="28" >Shared</text>
+  <text x="322" y="44" >Keychain</text>
+  <rect x="4" y="152" width="176" height="48" class="solid nofill" rx="4"></rect>
+  <text x="50" y="172" >App</text>
+  <text x="82" y="172" >Group</text>
+  <text x="42" y="188" >UserDefaults</text>
+  <rect x="308" y="280" width="88" height="32" class="solid nofill" rx="4"></rect>
+  <text x="322" y="300" >Your</text>
+  <text x="362" y="300" >API</text>
+  <polygon points="288,36 296,40 288,44" class="filled"></polygon>
+  <text x="146" y="60" >save</text>
+  <text x="194" y="60" >token</text>
+  <polygon points="56,132 64,132 60,144" class="filled"></polygon>
+  <polygon points="352,76 356,64 360,76" class="filled"></polygon>
+  <polygon points="192,164 184,168 192,172" class="filled"></polygon>
+  <text x="338" y="172" >Share</text>
+  <text x="194" y="188" >1.</text>
+  <text x="218" y="188" >check</text>
+  <text x="322" y="188" >Extension</text>
+  <polygon points="352,260 360,260 356,272" class="filled"></polygon>
+  <text x="26" y="44" >Main</text>
+  <text x="66" y="44" >App</text>
+  <text x="74" y="108" >save</text>
+  <text x="74" y="124" >user</text>
+  <line x1="104" y1="128" x2="112" y2="128" class="solid"></line>
+  <text x="114" y="124" >id</text>
+  <text x="370" y="108" >2.</text>
+  <text x="394" y="108" >read</text>
+  <text x="394" y="124" >token</text>
+  <text x="370" y="236" >3.</text>
+  <text x="394" y="236" >POST</text>
+  <text x="394" y="252" >Bearer</text>
+  <text x="450" y="252" >token</text>
+  <g>
+    <path d="M 8,8 A 4,4 0,0,0 4,12" class="nofill"></path>
+    <line x1="4" y1="12" x2="4" y2="68" class="solid"></line>
+    <line x1="8" y1="8" x2="112" y2="8" class="solid"></line>
+    <path d="M 112,8 A 4,4 0,0,1 116,12" class="nofill"></path>
+    <line x1="116" y1="12" x2="116" y2="68" class="solid"></line>
+    <line x1="116" y1="40" x2="288" y2="40" class="solid"></line>
+    <path d="M 4,68 A 4,4 0,0,0 8,72" class="nofill"></path>
+    <line x1="8" y1="72" x2="112" y2="72" class="solid"></line>
+    <line x1="60" y1="72" x2="60" y2="132" class="solid"></line>
+    <path d="M 116,68 A 4,4 0,0,1 112,72" class="nofill"></path>
+  </g>
+  <g>
+    <line x1="356" y1="76" x2="356" y2="152" class="solid"></line>
+    <path d="M 288,152 A 4,4 0,0,0 284,156" class="nofill"></path>
+    <line x1="284" y1="156" x2="284" y2="196" class="solid"></line>
+    <line x1="288" y1="152" x2="424" y2="152" class="solid"></line>
+    <path d="M 424,152 A 4,4 0,0,1 428,156" class="nofill"></path>
+    <line x1="428" y1="156" x2="428" y2="196" class="solid"></line>
+    <line x1="192" y1="168" x2="284" y2="168" class="solid"></line>
+    <path d="M 284,196 A 4,4 0,0,0 288,200" class="nofill"></path>
+    <line x1="288" y1="200" x2="424" y2="200" class="solid"></line>
+    <line x1="356" y1="200" x2="356" y2="260" class="solid"></line>
+    <path d="M 428,196 A 4,4 0,0,1 424,200" class="nofill"></path>
+  </g>
+</svg>
