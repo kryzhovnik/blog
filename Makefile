@@ -1,4 +1,4 @@
-.PHONY: start build install clean og-background
+.PHONY: start build install clean deploy og-background
 
 start:
 	bundle exec jekyll serve
@@ -11,6 +11,9 @@ install:
 
 clean:
 	rm -rf _site .jekyll-cache
+
+deploy:
+	git push
 
 og-background:
 	@mkdir -p assets/images/og-backgrounds
