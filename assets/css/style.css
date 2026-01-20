@@ -83,6 +83,7 @@ h4 {
   line-height: 1.3;
   margin-top: 2rem;
   margin-bottom: 1rem;
+  clear: both;
 }
 
 h1 {
@@ -187,6 +188,39 @@ a {
       font-size: 0.9rem;
       font-style: italic;
     }
+
+    &.phone-screenshot img {
+      max-height: 400px;
+      width: auto;
+    }
+
+    &.aside-right {
+      & img {
+        max-height: 500px;
+        width: auto;
+      }
+
+      @media (min-width: 640px) {
+        float: right;
+        margin: 0 0 1rem 1.5rem;
+      }
+    }
+  }
+
+  & .screenshot-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+
+    & figure {
+      margin: 0;
+
+      & img {
+        max-height: 300px;
+        width: auto;
+      }
+    }
   }
 }
 
@@ -214,6 +248,7 @@ pre {
 
 .highlighter-rouge {
   margin-bottom: 1.5rem;
+  clear: both;
 
   & .highlight {
     padding: 0.675rem 1.25rem;

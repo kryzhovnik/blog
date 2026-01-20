@@ -10,7 +10,7 @@ I used to hate the Share function on mobile. For years it was just an icon that 
 
 <figure>
   <img src="/assets/images/diagrams/share-as-pipe.svg" alt="Share as Unix pipe">
-  <figcaption>$: source | destination</figcaption>
+  <figcaption>share ≈ pipe</figcaption>
 </figure>
 
 The problem is that Unix pipes live inside a single user environment, while Share crosses app boundaries: separate sandboxes, separate processes, separate security rules. So the task "pass data" quickly becomes "pass data in the user's context": the receiver needs to know who the current user is and where to put this package. In my case: a user shares a link to my app, but processing happens on the server, so the user needs to be authenticated first. What do you do when a Share request arrives but there's no session — or the session isn't available right now?
@@ -81,9 +81,12 @@ Starting with iOS 18, this code throws a sandbox error (`NSOSStatusErrorDomain C
 
 ## How Apple's own apps do it
 
-It's interesting to see how Apple solves this problem in their own apps.
+<figure class="aside-right">
+  <img src="/assets/images/posts/ios-18-share-extension/notes-share-sheet.png" alt="Notes Share Extension">
+  <figcaption>Notes Share Extension</figcaption>
+</figure>
 
-Here's what I found:
+It's interesting to see how Apple solves this problem in their own apps. Here's what I found:
 
 **Notes:** when sharing a link to Notes, the extension shows a folder picker, you tap "Save" and... you stay in Safari. The note is saved via background sync, and you only find out when you open Notes.
 
@@ -229,6 +232,25 @@ Implementation details:
 3) **If there's no token** — the extension saves data to App Group and shows a local notification "Log in to save the link". On tap, the app opens. If the user didn't grant notification permission — we show the same request right in the extension UI.
 
 4) **The main app finishes the job later.** On next launch, the app picks up the saved data, guides the user through login, and finishes saving after they sign in.
+
+<div class="screenshot-gallery">
+  <figure>
+    <img src="/assets/images/posts/ios-18-share-extension/share-sheet-authenticated.png" alt="Authenticated">
+    <figcaption>Authenticated</figcaption>
+  </figure>
+  <figure>
+    <img src="/assets/images/posts/ios-18-share-extension/share-sheet-unauthenticated.png" alt="Unauthenticated">
+    <figcaption>Unauthenticated</figcaption>
+  </figure>
+  <figure>
+    <img src="/assets/images/posts/ios-18-share-extension/notification-login-required.png" alt="Notification">
+    <figcaption>Notification</figcaption>
+  </figure>
+  <figure>
+    <img src="/assets/images/posts/ios-18-share-extension/app-pending-share.png" alt="Pending share">
+    <figcaption>Pending share</figcaption>
+  </figure>
+</div>
 
 This approach gives the best UX for most users (those already logged in), but doesn't break for new users.
 
