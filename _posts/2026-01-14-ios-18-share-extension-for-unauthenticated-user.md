@@ -221,6 +221,8 @@ The user doesn't leave the Share Sheet — that's good. But the implementation i
 
 ## What I chose
 
+[DropKind](https://dropkind.app) is a simple app that sends articles and text to your Kindle. You find something interesting while browsing — share it to DropKind, and it lands on your e-reader. The Share Extension is the main entry point: most users discover content in Safari, not in the app itself. So a broken or clunky share flow means a broken product.
+
 For DropKind, I chose a combination of solutions A and B. The main path is Shared Keychain: if the user is already logged in to the app, the extension picks up the token and works autonomously. If there's no token — we show a local notification.
 
 Implementation details:
