@@ -1,0 +1,21 @@
+              .---------------.
+              |     Share     |
+              |   Extension   |
+              '-------+-------'
+                      |
+                      | 1. walk responder chain
+                      v
+              .---------------.
+              | UIWindowScene |
+              '-------+-------'
+                      |
+                      | 2. scene.open[url]
+                      v
+                  success?
+                 /         \
+           yes  /           \  no
+               v             v
+      .----------.     .--------------.
+      | Main App |     | Ask User to  |
+      '----------'     |   Open App   |
+                       '--------------'

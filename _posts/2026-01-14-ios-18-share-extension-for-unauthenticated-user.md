@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "Why Your Share Extension Broke in iOS 18 (and How to Fix It in 2026)"
+title: "Share Extension Auth in iOS 18: Four Approaches Compared"
 date: 2026-01-14
-description: "Share Extensions can no longer open your app in iOS 18. How to handle authentication with Shared Keychain, local notifications, and in-extension OAuth."
+description: "Share Extensions can no longer open your app directly. A comparison of four approaches to handle authentication in iOS 18."
 tags: [ios, swift, share-extension]
 ---
 
-I used to hate the Share function on mobile. For years it was just an icon that kept appearing everywhere, one I never used. Then something clicked — I realized that Share is like a Unix pipe: you take content from one app and send it to another in one action. No copy-paste, no saving files, no searching for "import" — just pick the next tool and continue the chain. The only difference is that instead of a stream, Share passes a package (a link, text, a file, or several photos).
+For years, the Share icon on mobile was just visual noise to me — something that kept appearing everywhere but I never used. Then something clicked: Share is like a Unix pipe. You take content from one app and send it to another in one action. No copy-paste, no saving files, no searching for "import" — just pick the next tool and continue the chain. The only difference is that instead of a stream, Share passes a package (a link, text, a file, or several photos).
 
 <figure>
   <img src="/assets/images/diagrams/share-as-pipe.svg" alt="Share as Unix pipe">
@@ -49,9 +49,7 @@ This is not a bug or a temporary regression. Apple [explicitly states](https://d
 
 ### Cold start / Warm start
 
-In my experience, sometimes `extensionContext.open(...)` works only when the app is already in memory, but there are no guarantees and this is not documented.
-
-The problem is that you can't control what state the app is in. The user might have closed it an hour ago, and `extensionContext.open()` will silently fail.
+In my experience, `extensionContext.open(...)` sometimes works when the app is already in memory — but you can't control or predict that, and it's not documented. The user might have closed the app an hour ago, and the call will silently fail.
 
 ### What Apple recommends instead of openURL
 
@@ -96,7 +94,7 @@ It's interesting to see how Apple solves this problem in their own apps. Here's 
 
 So Apple's apps either don't open the main app at all, or they use privileged system mechanisms that are not available to third-party developers.
 
-## Three working solutions
+## Working solutions
 
 ### Solution A: Shared Keychain — the extension handles auth on its own
 
@@ -186,6 +184,17 @@ func showLoginNotification(pendingURL: URL) {
 
 The implementation is simple and works reliably. The downside is an extra step for the user, and you need notification permission.
 
+#### In practice: robust API, flaky UX
+
+I tried this approach and found it unreliable in practice:
+
+- Users deny notification permission reflexively
+- Focus Mode / Do Not Disturb suppresses notifications silently
+- Even delivered notifications get dismissed without reading
+- Too many steps between "tap Share" and "complete the action"
+
+Local notifications are robust from iOS's standpoint — Apple recommends it, the API is stable and documented. But they're flaky from a UX standpoint. Too many points of failure for the user to actually complete the share.
+
 ### Solution C: OAuth inside the extension
 
 <figure>
@@ -193,37 +202,49 @@ The implementation is simple and works reliably. The downside is an extra step f
   <figcaption>Share Extension handles OAuth flow internally; token saved for future use</figcaption>
 </figure>
 
-The most complex option is to implement full login right in the Share Extension:
+The most complex option: implement full OAuth login right in the Share Extension using `ASWebAuthenticationSession`. The user authenticates without leaving the Share Sheet, the token is saved to Shared Keychain, and future shares work autonomously.
 
-1. Extension shows a WebView with the OAuth page
-2. User logs in
-3. Token is saved to Shared Keychain
-4. Data is sent
+The UX is seamless — but the implementation is a lot of work. Not all OAuth providers play nice with extensions, and `ASWebAuthenticationSession` has quirks when running outside the main app context.
+
+### Solution D: UIWindowScene.open() via responder chain
+
+<figure>
+  <img src="/assets/images/diagrams/solution-d-windowscene.svg" alt="Solution D: UIWindowScene responder chain">
+  <figcaption>Share Extension walks the responder chain to find UIWindowScene and calls open()</figcaption>
+</figure>
+
+Remember the old UIResponder chain hack that Apple blocked? It turns out there's a variation that still works on iOS 18+. Instead of walking up to `UIApplication`, you walk up to `UIWindowScene` and call its `open(_:options:completionHandler:)` method:
 
 ```swift
-// Simplified:
-class ShareViewController: SLComposeServiceViewController {
-    func presentLogin() {
-        let authURL = URL(string: "https://dropkind.app/oauth/authorize?...")!
-        let authSession = ASWebAuthenticationSession(
-            url: authURL,
-            callbackURLScheme: "dropkind"
-        ) { callbackURL, error in
-            // Handle token
+static func openViaResponderChain(
+    from viewController: UIViewController,
+    url: URL,
+    completion: ((Bool) -> Void)? = nil
+) {
+    var responder: UIResponder? = viewController
+
+    while let current = responder {
+        if let scene = current as? UIWindowScene {
+            scene.open(url, options: nil) { success in
+                completion?(success)
+            }
+            return
         }
-        authSession.presentationContextProvider = self
-        authSession.start()
+        responder = current.next
     }
+    completion?(false)
 }
 ```
 
-The user doesn't leave the Share Sheet — that's good. But the implementation is complex, not all OAuth providers work well in extensions, and there are nuances with `ASWebAuthenticationSession` inside an extension.
+This works because `UIWindowScene.open()` isn't subject to the same restrictions as `UIApplication.open()`. The system doesn't block it — at least not yet.
+
+**Caveat**: This is undocumented behavior. Apple could block it in a future iOS version, just like they blocked the `UIApplication` approach. Always have a fallback ready.
 
 ## What I chose
 
 [DropKind](https://dropkind.app) is a simple app that sends articles and text to your Kindle. You find something interesting while browsing — share it to DropKind, and it lands on your e-reader. The Share Extension is the main entry point: most users discover content in Safari, not in the app itself. So a broken or clunky share flow means a broken product.
 
-For DropKind, I chose a combination of solutions A and B. The main path is Shared Keychain: if the user is already logged in to the app, the extension picks up the token and works autonomously. If there's no token — we show a local notification.
+For DropKind, I chose a combination of solutions A and D, with a manual fallback. The main path is Shared Keychain: if the user is already logged in to the app, the extension picks up the token and works autonomously. If there's no token — we try to open the app via `UIWindowScene`, and if that fails, we show an in-extension prompt.
 
 Implementation details:
 
@@ -231,29 +252,27 @@ Implementation details:
 
 2) **user_id in App Group.** Along with the token, we save `user_id` to App Group UserDefaults. This serves two purposes: the server verifies the token owner, and the presence of `user_id` itself is a marker that the app wasn't reinstalled (UserDefaults gets deleted on uninstall, unlike Keychain).
 
-3) **If there's no token** — the extension saves data to App Group and shows a local notification "Log in to save the link". On tap, the app opens. If the user didn't grant notification permission — we show the same request right in the extension UI.
+3) **If there's no token** — the extension saves data to App Group and attempts `UIWindowScene.open()` via the responder chain. This has worked reliably for me on iOS 18.
 
-4) **The main app finishes the job later.** On next launch, the app picks up the saved data, guides the user through login, and finishes saving after they sign in.
+4) **If UIWindowScene.open() fails** — the extension shows an in-extension prompt asking the user to open the app manually. This is the final fallback, no notifications involved.
+
+5) **The main app finishes the job.** On launch, the app checks for pending share data in the App Group, guides the user through login if needed, and completes the share.
 
 <div class="screenshot-gallery">
   <figure>
     <img src="/assets/images/posts/ios-18-share-extension/share-sheet-authenticated.png" alt="Authenticated">
-    <figcaption>Authenticated</figcaption>
+    <figcaption>Authenticated user</figcaption>
   </figure>
   <figure>
     <img src="/assets/images/posts/ios-18-share-extension/share-sheet-unauthenticated.png" alt="Unauthenticated">
-    <figcaption>Unauthenticated</figcaption>
-  </figure>
-  <figure>
-    <img src="/assets/images/posts/ios-18-share-extension/notification-login-required.png" alt="Notification">
-    <figcaption>Notification</figcaption>
+    <figcaption>Unauthenticated: prompts to open app</figcaption>
   </figure>
   <figure>
     <img src="/assets/images/posts/ios-18-share-extension/app-pending-share.png" alt="Pending share">
-    <figcaption>Pending share</figcaption>
+    <figcaption>App completes the pending share</figcaption>
   </figure>
 </div>
 
 This approach gives the best UX for most users (those already logged in), but doesn't break for new users.
 
-Going back to the pipe analogy: `grep` doesn't say "please open terminal and enter a pattern" — it just works with what it has. Share Extension should do the same whenever possible.
+Going back to the pipe analogy: `grep` doesn't ask you to configure anything — it just works with what it has. A Share Extension should aim for the same, handling auth silently whenever possible.
