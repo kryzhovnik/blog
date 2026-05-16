@@ -23,19 +23,23 @@ The new draft should spend less time on discarded approaches and more time on th
 - Describe the one-tool-per-component problem precisely: composition is possible only by minting more special top-level tools, which causes scenario/tool proliferation.
 - Align the gem section with the current implementation:
   - `ResponseSchema` is a shared permissive envelope schema, not generated from component classes.
-  - component classes feed prompt instructions, validation allow-lists, and render-target resolution.
-  - `MessageExtensions` reads stored structured content and validates the tree; it does not validate against `ResponseSchema`.
+  - component classes feed prompt instructions, admission-time validation allow-lists, and render-target resolution.
+  - `Acceptance` is the authoritative write-path boundary for newly generated responses.
+  - invalid generated trees are rejected before persistence; apps may ask the model to repair them with `retry_instructions`.
+  - `MessageExtensions` is read-side parsing for already accepted content; it does not expose render-time validation.
   - the repo link points to the gem author's repository, not the RubyLLM maintainer's.
 - Mention two missing boundaries:
   - interactive components only render UI; turning a click into the next user turn remains application logic;
   - the app keeps the trust boundary through allow-listed components, server-side validation, and ordinary authorization for real actions.
+- Present the final lifecycle as:
+  `prompt -> structured response -> Acceptance -> optional repair -> persistence -> render`.
 
 ## Compression strategy
 - Shorten the `halt` detour.
 - Replace the long partial example with only the essential rendering seam.
 - Reduce the `render_ui` section to one representative example plus the architectural point.
 - Avoid re-explaining envelope/catalog separation in both the structured-output and gem sections.
-- Keep the gem section focused on what the library packages, not on duplicating README-level detail.
+- Keep the gem section focused on the lifecycle the library packages, not on duplicating README-level detail.
 
 ## Output
 Create a new draft file alongside the original, tentatively `_drafts/generative-ui-ruby-llm-v2.md`, leaving the current draft untouched.
