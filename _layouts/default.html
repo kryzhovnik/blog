@@ -10,6 +10,10 @@
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v={{ site.github.build_revision }}">
   <script defer src="https://cloud.umami.is/script.js" data-website-id="461a89b6-9cc6-422e-af45-2eb81760f16b"></script>
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
+  {% if page.layout == "post" %}
+  {% assign md_url = page.url | replace: "/", "" | prepend: "/" | append: ".md" %}
+  <link rel="alternate" type="text/markdown" href="{{ md_url | relative_url }}">
+  {% endif %}
 </head>
 
 <body>

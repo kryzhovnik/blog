@@ -1,0 +1,19 @@
+---
+permalink: /llms.txt
+layout: none
+sitemap: false
+---
+# {{ site.title }}
+
+> {{ site.description }}
+
+Author: {{ site.author }}. Personal tech blog at {{ site.url }}.
+
+Each post below links to a clean Markdown version (the post's URL with `.md` appended).
+
+## Posts
+
+{% for post in site.posts -%}
+{%- assign md_url = post.url | replace: "/", "" | prepend: "/" | append: ".md" -%}
+- [{{ post.title }}]({{ site.url }}{{ md_url }}): {{ post.description }}
+{% endfor %}
