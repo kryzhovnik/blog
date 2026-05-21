@@ -187,6 +187,14 @@ a {
       color: var(--text-secondary);
       font-size: 0.9rem;
       font-style: italic;
+
+      &:first-child {
+        color: var(--text);
+        font-size: 1.05rem;
+        font-weight: 600;
+        font-style: normal;
+        margin-bottom: 0.75rem;
+      }
     }
 
     &.phone-screenshot img {
@@ -219,6 +227,27 @@ a {
       & img {
         max-height: 300px;
         width: auto;
+      }
+    }
+  }
+
+  & .row {
+    margin: 2rem 0;
+
+    & .row-figure figure {
+      margin: 0;
+    }
+
+    @media (min-width: 700px) {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: center;
+    }
+
+    &.row--top {
+      @media (min-width: 700px) {
+        align-items: start;
       }
     }
   }
