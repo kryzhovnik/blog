@@ -1,9 +1,12 @@
 ---
 layout: post
 title: "Generative UI in Rails with RubyLLM"
-date: 2026-05-14
-description:
+date: 2026-05-21
+description: "A walk through the design choices for showing rich UI in an LLM chat app instead of plain text bubbles. Tools, schemas, and a tiny gem for generative UI on top of RubyLLM."
 tags: [rails, ruby-llm, llm, generative-ui]
+og_image:
+  canvas:
+    background_image: "/assets/images/og-backgrounds/bg-3dd7.png"
 ---
 
 Chat is a natural interface for LLMs, and a lot of things work well inside it. But visual responses — cards, buttons, choices, inline widgets — have already become a baseline user expectation: tables and charts in ChatGPT answers, quick replies in support bots, forms and confirmations in banking assistants.
