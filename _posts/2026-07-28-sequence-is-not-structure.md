@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Sequence Is Not Structure"
+title: "Sequence Is Not Structure: Getting Lost in Long LLM Conversations"
 date: 2026-07-28
 description: "Long LLM conversations preserve sequence, not structure. I want a way to see where ideas branch, drift, and remain unfinished."
 tags: [llm, ux, thinking-tools]
