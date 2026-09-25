@@ -22,11 +22,11 @@ html {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
-  font-weight: 500;
-  line-height: 1.7;
+  font-weight: 400;
+  line-height: 1.6;
   color: var(--text);
   background: var(--background);
-  max-width: 960px;
+  max-width: calc(780px + 1.75rem);
   margin: 0 auto;
   padding: 2rem 0.875rem;
   min-height: 100vh;
@@ -79,7 +79,9 @@ main {
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5,
+h6 {
   line-height: 1.3;
   margin-top: 2rem;
   margin-bottom: 1rem;
@@ -261,7 +263,8 @@ a {
 
 /* Code */
 code {
-  font-family: "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-weight: 500;
   font-size: 0.85em;
   background: var(--code-bg);
   padding: 0.15em 0.35em;
@@ -317,6 +320,131 @@ blockquote {
   margin: 1.5rem 0;
   color: var(--text-secondary);
   font-style: italic;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+/* Remaining prose elements that kramdown can emit */
+h4 {
+  font-size: 1.05rem;
+}
+
+h5,
+h6 {
+  font-size: 1rem;
+}
+
+h6 {
+  color: var(--text-secondary);
+}
+
+li > ul,
+li > ol {
+  margin: 0.5rem 0 0;
+}
+
+li > p {
+  margin-bottom: 0.5rem;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2.5rem 0;
+}
+
+table {
+  display: block;
+  max-width: fit-content;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+}
+
+th,
+td {
+  padding: 0.5rem 1rem 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  text-align: left;
+}
+
+/* kramdown sets alignment inline; right-aligned columns hold numbers */
+td[style*="right"],
+th[style*="right"] {
+  white-space: nowrap;
+}
+
+th {
+  font-weight: 600;
+  border-bottom-color: var(--text-secondary);
+}
+
+th:last-child,
+td:last-child {
+  padding-right: 0;
+}
+
+dl {
+  margin-bottom: 1.5rem;
+}
+
+dt {
+  font-weight: 600;
+}
+
+dd {
+  margin: 0 0 0.75rem 1.5rem;
+}
+
+kbd {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8em;
+  padding: 0.1em 0.4em;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 3px;
+}
+
+mark {
+  background: #fff3b0;
+  padding: 0 0.15em;
+}
+
+sup,
+sub {
+  line-height: 0;
+}
+
+abbr[title] {
+  text-decoration: underline dotted;
+  cursor: help;
+}
+
+details {
+  margin-bottom: 1.5rem;
+
+  & summary {
+    cursor: pointer;
+    font-weight: 600;
+  }
+}
+
+.footnotes {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+
+  & p {
+    margin-bottom: 0.5rem;
+  }
 }
 
 /* Collapsible section */
