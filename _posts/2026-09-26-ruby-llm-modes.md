@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Chat Modes: Configuring the LLM for Each Turn"
-date: 2026-09-25
+date: 2026-09-26
 description: "A real job for Jev: routing every chat turn to a mode with its own instructions, tools, model, and thinking."
 tags: [rails, ruby-llm, llm, jev, chat-modes]
 ---
@@ -57,7 +57,7 @@ message and history → classifier → mode → configured chat → reply
 
 A small classifier looks at the last message and the history and decides what the user wants right now: explain a word, work with flashcards, deal with a TV show, or ask a clarifying question. The next message goes through the classifier again, and the mode may change.
 
-The key property of this scheme is that the boundary between behaviors is made explicit: there is a finite set of named configurations — modes — and a separate, observable router decision. The model that answers the user never sees the tools and instructions of other modes, because the choice was made before it. Routing and each mode are tested independently.
+The key property of this scheme is that the boundary between behaviors is made explicit: there is a finite set of named configurations — modes — and a separate, observable router decision. The model that answers the user never sees the tools and instructions of other modes, because the choice was made before it and the chat is built for the turn: in Rails the chat record is loaded per turn, so nothing carries over. Routing and each mode are tested independently.
 
 Each mode also has a short description, and it works the same way as a tool description. The model reads tool descriptions to decide which tool to call; the router reads mode descriptions to decide which mode to pick.
 
@@ -110,7 +110,7 @@ The classifier can be unsure, and it can fail. For both cases the router has a f
 }
 ```
 
-Here `manage_cards` got the highest probability, but the distribution was not concentrated enough: confidence 0.4 against a threshold of 0.5, so the router took the fallback `tutor`. On the same turn, Flash-Lite reported 0.95 for `manage_cards`, and the router would have gone straight there. When the intent is known without a classifier, for example the user clicked a button in the UI, the code can set the mode directly, and the record shows that too: `decided_by: caller`.
+Here `manage_cards` got the highest probability, but the distribution was not concentrated enough: confidence 0.4 against a threshold of 0.5, so the router took the fallback `tutor`. On the same turn, Flash-Lite reported 0.95 for `manage_cards`, and the router would have gone straight there. When the intent is known without a classifier, for example the user clicked a button in the UI, the code can set the mode directly (`router.force("manage_cards", chat:)` in the gem below), and the record shows that too: `decided_by: caller`.
 
 ## Limitations
 
@@ -178,14 +178,19 @@ class ChatModeRouter < RubyLLM::Modes::Router
 end
 ```
 
-Applying it on each turn takes two lines: the router picks the mode, the mode configures the chat and runs the turn:
+Applying it on each turn takes three lines. The message goes into the chat, the router picks the mode, the mode configures the chat and runs the turn:
 
 ```ruby
-route = ChatModeRouter.new(user:, card:).call(message.content, history: chat.messages)
-route.mode(chat:).complete
+chat.ask_later(message)
+route = ChatModeRouter.new(user:, card:).route(chat)
+route.mode.complete
 ```
 
-`classify_with :judge` uses Jev through RubyLLM's judge API. Judge is already in RubyLLM's main; it is not in 2.0.0 yet. Switching the router to it is a one-line change.
+`ask_later` is RubyLLM's own: `ask` is `ask_later` followed by `complete`, and the router sits between the two. By default it reads the conversation from the chat and routes the last user message. As context it takes only the text the user and the assistant exchanged before it: the system prompt, tool calls and their results are left out, because they help the answering model and only distract the classifier. In Rails, `ask_later` saves the message, so a job that runs `route` and `complete` later sees the same chat.
+
+When the stored messages are not the conversation the user saw, give the router its own list of messages instead: `route(chat, messages: routing_messages)`. Any object with `each` over `{ role:, content: }` entries will do; the router reads it the way it reads the chat. In my app the reply is JSON with the text inside, some messages are hidden from the learner, and the assistant often answers with UI rather than words: a picker, an offer to create a card. So the list carries the extracted text, a line for what the UI showed and what became of it, and the mode that answered each turn. The list is for the classifier only; the mode still runs on the same chat.
+
+`classify_with :judge` uses Jev through `RubyLLM.judge`. Judge is a new feature in RubyLLM: it is on the main branch and is not in a release yet.
 
 ### Try it
 
