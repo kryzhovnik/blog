@@ -55,6 +55,22 @@ def bar(y, modes, turn):
 rows = len(TURNS); RH = LABEL + BH + GAP
 H = 150 + 2*(rows*RH + 90) + 20
 add(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">')
+# Embedded SVG media queries follow the embedding page's CSS color-scheme.
+add('''<style>
+  @media (prefers-color-scheme: dark) {
+    [fill="white"] { fill: #191919; }
+    [fill="#1f2937"] { fill: #e6e6e6; }
+    [fill="#6b7280"] { fill: #aaa; }
+    [fill="#dbeafe"] { fill: #253c55; }
+    [fill="#bfdbfe"] { fill: #365d83; }
+    [fill="#fde68a"] { fill: #806522; }
+    [fill="#94a3b8"] { fill: #7a8ca3; }
+    [fill="#e5e7eb"] { fill: #3c424a; }
+    [fill="#2563eb"] { fill: #80baff; }
+    [stroke="#475569"] { stroke: #8493a5; }
+    [stroke="#1f2937"] { stroke: #e6e6e6; }
+  }
+</style>''')
 add(f'<rect width="{W}" height="{H}" fill="white"/>')
 
 def panel(top, title, subtitle, routed):

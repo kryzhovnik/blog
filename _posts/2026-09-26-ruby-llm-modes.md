@@ -9,7 +9,7 @@ tags: [rails, ruby-llm, llm, jev, chat-modes]
 In my language-learning app, a learner can start a chat with either of these messages:
 
 <figure>
-  <img src="/assets/images/posts/chat-modes/00-two-turns.png" alt="Two chats. In the first, the learner sent the single word &quot;adjudicate&quot;. In the second, the learner sent &quot;make cards from Friends S2E3&quot;. In both, the assistant shows the same &quot;Reasoning…&quot; indicator.">
+  <img src="/assets/images/posts/chat-modes/00-two-turns.svg" alt="Two chats. In the first, the learner sent the single word &quot;adjudicate&quot;. In the second, the learner sent &quot;make cards from Friends S2E3&quot;. In both, the assistant shows the same &quot;Reasoning…&quot; indicator.">
 </figure>
 
 The first is a bare word: the learner wants it explained, right now. The second is a job: find the show, check the episode is in the catalog, run the extraction, report back. Everything about a good reply differs between them:

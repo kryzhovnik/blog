@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="420" viewBox="0 0 1400 420">
+  <style>
+    :root {
+      --background: #fff;
+      --frame: #18191d;
+      --island: #09090b;
+      --bubble: #f0f0f2;
+      --text: #222936;
+      --muted: #53545f;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background: #191919;
+        --frame: #666870;
+        --island: #09090b;
+        --bubble: #303034;
+        --text: #e6e6e6;
+        --muted: #aaa;
+      }
+    }
+    .phone { fill: var(--background); stroke: var(--frame); stroke-width: 12; }
+    .island { fill: var(--island); }
+    .bubble { fill: var(--bubble); }
+    text { font-family: ui-sans-serif, -apple-system, Helvetica, Arial, sans-serif; font-size: 32px; fill: var(--text); }
+    .reasoning { fill: var(--muted); font-style: italic; }
+  </style>
+  <defs>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0.74" stop-color="white"/>
+      <stop offset="1" stop-color="black"/>
+    </linearGradient>
+    <mask id="phone-fade">
+      <rect width="1400" height="420" fill="url(#fade)"/>
+    </mask>
+  </defs>
+  <g mask="url(#phone-fade)">
+    <rect class="phone" x="6" y="6" width="660" height="600" rx="64"/>
+    <rect class="phone" x="734" y="6" width="660" height="600" rx="64"/>
+  </g>
+  <rect class="island" x="256" y="28" width="160" height="32" rx="16"/>
+  <rect class="island" x="984" y="28" width="160" height="32" rx="16"/>
+  <rect class="bubble" x="292" y="92" width="344" height="80" rx="32"/>
+  <rect class="bubble" x="1020" y="92" width="344" height="128" rx="32"/>
+  <text x="316" y="144">adjudicate</text>
+  <text x="1044" y="144">make cards from</text>
+  <text x="1044" y="192">Friends S2E3</text>
+  <text class="reasoning" x="36" y="240">Reasoning...</text>
+  <text class="reasoning" x="764" y="288">Reasoning...</text>
+</svg>

@@ -1,4 +1,4 @@
-/* Syntax highlighting (gruvbox light / dark, follows the system color scheme) */
+/* Syntax highlighting (gruvbox light / dark, follows the selected site theme) */
 :root {
   --hl-bg: #f5f5f5;
   --hl-fg: #3c3836;
@@ -13,7 +13,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     --hl-bg: #282828;
     --hl-fg: #fbf1c7;
     --hl-comment: #928374;
@@ -25,6 +25,19 @@
     --hl-aqua: #8ec07c;
     --hl-orange: #fe8019;
   }
+}
+
+:root[data-theme="dark"] {
+  --hl-bg: #282828;
+  --hl-fg: #fbf1c7;
+  --hl-comment: #928374;
+  --hl-red: #fb4934;
+  --hl-green: #b8bb26;
+  --hl-yellow: #fabd2f;
+  --hl-blue: #83a598;
+  --hl-purple: #d3869b;
+  --hl-aqua: #8ec07c;
+  --hl-orange: #fe8019;
 }
 
 .highlight table td { padding: 5px; }

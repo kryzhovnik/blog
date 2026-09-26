@@ -1,4 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="880" height="652" viewBox="0 0 880 652">
+<style>
+  @media (prefers-color-scheme: dark) {
+    [fill="white"] { fill: #191919; }
+    [fill="#1f2937"] { fill: #e6e6e6; }
+    [fill="#6b7280"] { fill: #aaa; }
+    [fill="#dbeafe"] { fill: #253c55; }
+    [fill="#bfdbfe"] { fill: #365d83; }
+    [fill="#fde68a"] { fill: #806522; }
+    [fill="#94a3b8"] { fill: #7a8ca3; }
+    [fill="#e5e7eb"] { fill: #3c424a; }
+    [fill="#2563eb"] { fill: #80baff; }
+    [stroke="#475569"] { stroke: #8493a5; }
+    [stroke="#1f2937"] { stroke: #e6e6e6; }
+  }
+</style>
 <rect width="880" height="652" fill="white"/>
 <text x="40.0" y="40.0" font-family="ui-sans-serif, -apple-system, Helvetica, Arial, sans-serif" font-size="20" fill="#1f2937" text-anchor="start" font-weight="bold">One configuration</text>
 <text x="40.0" y="62.0" font-family="ui-sans-serif, -apple-system, Helvetica, Arial, sans-serif" font-size="14" fill="#6b7280" text-anchor="start" font-weight="normal">One system prompt covering every mode, and every tool, on every request</text>
