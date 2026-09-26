@@ -14,6 +14,14 @@ layout: default
   </div>
 </article>
 
+{% assign related_post = site.data.related_posts[page.url] %}
+<nav class="post-navigation" aria-label="Post navigation">
+  <a href="{{ '/' | relative_url }}">← All posts</a>
+  {% if related_post %}
+  <a href="{{ related_post.url | relative_url }}" aria-label="Related post: {{ related_post.title }}">{{ related_post.title }} →</a>
+  {% endif %}
+</nav>
+
 <section class="comments">
   <script data-src="https://giscus.app/client.js"
           data-giscus

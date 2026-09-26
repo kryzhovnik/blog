@@ -34,3 +34,4 @@ exclude:
   - README.md
   - _drafts/materials
   - _private
+  - docs

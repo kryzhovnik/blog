@@ -80,10 +80,30 @@ main {
 }
 
 .site-title {
-  font-size: 1.25rem;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-size: 1.5rem;
+  font-weight: 700;
   text-decoration: none;
   color: var(--text);
+
+  &:hover .site-title-text {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+}
+
+.site-mark {
+  flex: 0 0 1em;
+  color: var(--accent);
+  font-size: 0.8em;
+  line-height: 1;
+  text-align: center;
+}
+
+.site-mark--back {
+  font-weight: 400;
 }
 
 .nav-links {
@@ -92,60 +112,14 @@ main {
   gap: 1.5rem;
 
   & a {
-    color: var(--text-secondary);
+    color: var(--accent);
     text-decoration: none;
     font-size: 0.95rem;
 
     &:hover {
-      color: var(--text);
+      text-decoration: underline;
     }
   }
-}
-
-.theme-switcher:not([hidden]) {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  padding: 2px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-}
-
-.theme-switcher button {
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  color: var(--text-secondary);
-  cursor: pointer;
-}
-
-.theme-switcher button:hover {
-  color: var(--text);
-}
-
-.theme-switcher button[aria-pressed="true"] {
-  background: var(--code-bg);
-  color: var(--text);
-}
-
-.theme-switcher button:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.theme-switcher svg {
-  width: 16px;
-  height: 16px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.7;
-  stroke-linecap: round;
-  stroke-linejoin: round;
 }
 
 /* Typography */
@@ -188,6 +162,10 @@ a {
 }
 
 /* Post list */
+body:has(.post-list) .site-header {
+  margin-bottom: 2.5rem;
+}
+
 .post-list {
   list-style: none;
   padding-left: 0;
@@ -198,16 +176,18 @@ a {
 
   & a {
     text-decoration: none;
-    color: var(--text);
+    color: var(--accent);
+
+    &:hover h2 {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
   }
 
   & h2 {
     font-size: 1.25rem;
+    font-weight: 600;
     margin: 0 0 0.25rem 0;
-
-    &:hover {
-      color: var(--accent);
-    }
   }
 
   & .post-description {
@@ -218,8 +198,10 @@ a {
   }
 
   & time {
+    display: block;
     color: var(--text-secondary);
     font-size: 0.8rem;
+    margin-bottom: 0.25rem;
   }
 }
 
@@ -326,6 +308,20 @@ a {
       }
     }
   }
+}
+
+.post-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+
+.post-navigation + .comments {
+  margin-top: 2rem;
 }
 
 .comments {
@@ -591,37 +587,74 @@ details {
 .about-intro {
   display: flex;
   gap: 2rem;
-  align-items: flex-start;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
-.about-text {
+.about-identity {
   flex: 1;
+  min-width: 0;
+
+  & h1 {
+    margin: 0 0 0.5rem;
+  }
+
+  & p {
+    margin: 0;
+    color: var(--text-secondary);
+  }
 }
 
 .about-avatar {
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
+@media (min-width: 601px) {
+  .about-avatar {
+    order: -1;
+  }
+}
+
 @media (max-width: 600px) {
+  body:has(.about-intro) .site-header {
+    margin-bottom: 2rem;
+  }
+
   .about-intro {
-    flex-direction: column-reverse;
-    align-items: center;
+    gap: 1rem;
+  }
+
+  .about-location {
+    display: block;
+  }
+
+  .about-separator {
+    display: none;
   }
 
   .about-avatar {
-    width: 160px;
-    height: 160px;
+    order: -1;
+    width: 96px;
+    height: 96px;
   }
 }
 
-.about-blog {
-  margin-top: 2rem;
+/* Footer */
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+
+  & p {
+    margin-bottom: 0;
+  }
 }
 
-/* Footer */
 footer {
   margin-top: 4rem;
   padding-top: 1.5rem;
@@ -634,6 +667,14 @@ footer {
 @media (max-width: 600px) {
   html {
     font-size: 16px;
+  }
+
+  .post-content {
+    font-size: 18px;
+
+    & pre {
+      font-size: 1rem;
+    }
   }
 
   h1 {

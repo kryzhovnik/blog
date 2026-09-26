@@ -2,7 +2,7 @@
 layout: post
 title: "Diving into Fizzy's Routes: Rails' resolve and direct"
 date: 2025-12-15
-description: "Exploring two underused Rails routing features — direct and resolve — through 37signals' newly open-sourced Fizzy codebase. Learn how to create custom URL helpers and teach Rails to generate polymorphic URLs for models without their own routes."
+description: "How Fizzy uses direct and resolve for public board links and models without their own pages."
 og_image:
   canvas:
     background_image: "/assets/images/og-backgrounds/bg-4190.png"

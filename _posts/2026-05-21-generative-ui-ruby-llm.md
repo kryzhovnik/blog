@@ -2,7 +2,7 @@
 layout: post
 title: "Generative UI in Rails with RubyLLM"
 date: 2026-05-21
-description: "A walk through the design choices for showing rich UI in an LLM chat app instead of plain text bubbles. Tools, schemas, and a tiny gem for generative UI on top of RubyLLM."
+description: "Let the model compose responses from a catalog of UI components. Rails validates and renders them."
 tags: [rails, ruby-llm, llm, generative-ui]
 og_image:
   canvas:

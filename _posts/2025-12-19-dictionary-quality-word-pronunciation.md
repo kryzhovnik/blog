@@ -2,7 +2,7 @@
 layout: post
 title: "Dictionary-Quality Word Pronunciation Without Dictionary APIs"
 date: 2025-12-19
-description: "How to build reliable word pronunciation for language learning apps using LLM-based TTS instead of dictionary APIs. Covers handling heteronyms with IPA substitution and building a practical pronunciation pipeline."
+description: "Using LLM-based TTS for a language-learning app, with IPA to guide the pronunciation of ambiguous words like ‘read’."
 og_image:
   canvas:
     background_image: "/assets/images/og-backgrounds/bg-3dd7.png"
