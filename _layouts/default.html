@@ -20,7 +20,7 @@
 <body>
   <header class="site-header">
     <nav>
-      <a href="{{ '/' | relative_url }}" class="site-title"{% unless page.url == '/' %} aria-label="{{ site.title }} — back to all posts"{% endunless %}><span class="site-mark{% unless page.url == '/' %} site-mark--back{% endunless %}" aria-hidden="true">{% if page.url == '/' %}✳{% else %}←{% endif %}</span><span class="site-title-text">{{ site.title }}</span></a>
+      <a href="{{ '/' | relative_url }}" class="site-title"{% unless page.url == '/' %} aria-label="{{ site.title }} — back to all posts"{% endunless %}>{% include site-mark.html %}<span class="site-title-text">{{ site.title }}</span></a>
       <div class="nav-links">
         {% if page.url == '/about/' %}
         <a href="{{ '/' | relative_url }}">Posts</a>

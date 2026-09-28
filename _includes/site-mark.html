@@ -1,0 +1,9 @@
+{%- comment -%}
+  Inline SVG instead of the ✳ and ← characters: iOS renders ✳ as a color emoji
+  and draws ← with a different font. currentColor keeps the theme accent.
+{%- endcomment -%}
+{%- if page.url == '/' -%}
+<svg class="site-mark" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"><path d="M12 3.5v17M3.5 12h17M6 6l12 12M6 18L18 6"/></svg>
+{%- else -%}
+<svg class="site-mark" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H4M10 6l-6 6 6 6"/></svg>
+{%- endif -%}

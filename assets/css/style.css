@@ -95,15 +95,10 @@ main {
 }
 
 .site-mark {
-  flex: 0 0 1em;
+  flex: none;
+  width: 0.8em;
+  height: 0.8em;
   color: var(--accent);
-  font-size: 0.8em;
-  line-height: 1;
-  text-align: center;
-}
-
-.site-mark--back {
-  font-weight: 400;
 }
 
 .nav-links {
