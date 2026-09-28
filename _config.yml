@@ -31,7 +31,5 @@ og_image:
 exclude:
   - Gemfile
   - Gemfile.lock
-  - README.md
   - _drafts/materials
   - _private
-  - docs
