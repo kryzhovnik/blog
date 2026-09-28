@@ -99,6 +99,44 @@ main {
   width: 0.8em;
   height: 0.8em;
   color: var(--accent);
+  stroke-width: 2.25;
+  transition: stroke-width 0.4s ease-in-out;
+
+  /* Eight rays from the center form the asterisk. */
+  & line {
+    --x: 12px;
+    --angle: 0deg;
+    transform: translate(var(--x), 12px) rotate(var(--angle));
+    transition: transform 0.4s ease-in-out;
+  }
+
+  & line:nth-child(2) { --angle: 45deg; }
+  & line:nth-child(3) { --angle: 90deg; }
+  & line:nth-child(4) { --angle: 135deg; }
+  & line:nth-child(5) { --angle: 180deg; }
+  & line:nth-child(6) { --angle: 225deg; }
+  & line:nth-child(7) { --angle: 270deg; }
+  & line:nth-child(8) { --angle: 315deg; }
+}
+
+/* The arrow folds the rays onto the shaft and the two head strokes. */
+:root[data-site-mark="arrow"] .site-mark {
+  stroke-width: 2;
+
+  & line:nth-child(2),
+  & line:nth-child(3) { --x: 3.5px; --angle: 45deg; }
+  & line:nth-child(4),
+  & line:nth-child(5),
+  & line:nth-child(6) { --angle: 180deg; }
+  & line:nth-child(7),
+  & line:nth-child(8) { --x: 3.5px; --angle: 315deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-mark,
+  .site-mark line {
+    transition: none;
+  }
 }
 
 .nav-links {
