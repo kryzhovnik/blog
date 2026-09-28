@@ -7,6 +7,9 @@ layout: default
     <time datetime="{{ page.date | date_to_xmlschema }}">
       {{ page.date | date: "%B %d, %Y" }}
     </time>
+    {% if page.written_around %}
+    <p class="post-origin">Written around {{ page.written_around }}, published in {{ page.published_in }} from my old notes.</p>
+    {% endif %}
   </header>
 
   <div class="post-content">

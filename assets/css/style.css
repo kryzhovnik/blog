@@ -252,6 +252,15 @@ body:has(.post-list) .site-header {
     color: var(--text-secondary);
     font-size: 0.95rem;
   }
+
+  & .post-origin {
+    margin: 1rem 0 0 0;
+    padding: 0.5rem 0.75rem;
+    border-left: 3px solid var(--border);
+    background: var(--code-bg);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
 }
 
 .post-content {

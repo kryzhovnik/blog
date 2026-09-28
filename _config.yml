@@ -13,6 +13,9 @@ kramdown:
   input: GFM
   syntax_highlighter: rouge
 
+feed:
+  posts_limit: 7
+
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
