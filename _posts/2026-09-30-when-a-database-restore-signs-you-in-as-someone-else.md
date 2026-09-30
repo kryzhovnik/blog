@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "When a Database Restore Signs You In as Someone Else"
-date: 2026-09-29
-description: "The Rails 8.1 authentication generator puts the session's row number in the cookie. After a database restore, that number can belong to another user."
+title: "Rails’ Default Authentication Has a Database Restore Problem"
+date: 2026-09-30
+description: "If you used Rails’ authentication generator, a database restore can make an old session cookie sign you in as another user."
 tags: [rails, security, authentication]
 ---
 
@@ -20,9 +20,9 @@ cookies.signed.permanent[:session_id] = { value: session.id, httponly: true, sam
 Session.find_by(id: cookies.signed[:session_id])
 ```
 
-Here is the production-to-production case with SQLite:
+Here is the production-to-production case:
 
-0. We back up the database when the session id counter is at `1000`.
+0. We back up the database when the session id counter is at, for example, `1000`.
 1. Alice signs in. Rails inserts a row into the `sessions` table with the primary key `sessions.id = 1001`. Her signed cookie contains the number `1001`.
 2. Production is restored from the backup. Alice's row disappears, and the session id counter goes back to `1000`. Her cookie and the application's signing key stay the same.
 3. Bob signs in. Rails inserts a new row with `sessions.id = 1001`, but this row belongs to Bob.
