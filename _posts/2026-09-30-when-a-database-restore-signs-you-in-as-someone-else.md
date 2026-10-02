@@ -32,6 +32,8 @@ There could be many Alices, each holding many cookies. If the app allows enough 
 
 The signature proves that the application issued the number. It does not prove which session that number originally identified.
 
+You can try this sequence in your browser: [live demo](https://rails-auth-demo.samsonov.io). It runs the generated authentication code in a Rails 8.1 app with SQLite, entirely in the page, thanks to [wasmify-rails](https://github.com/palkan/wasmify-rails).
+
 ## A comic!
 
 I drew the sequence as a bank story to check that I was not overstating it. I also wanted to show my family what I had spent half a day on.
