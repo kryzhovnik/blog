@@ -62,7 +62,7 @@ I [added new information to the closed issue](https://github.com/rails/rails/iss
 
 ## How to fix it
 
-Use an independently generated random token instead of the database id to identify a session in the cookie. I returned to the generator's original design.
+Use an independently generated random token instead of the database id to identify a session in the cookie. I returned to the generator's original design and opened [#58926](https://github.com/rails/rails/pull/58926) to make the generator do the same.
 
 > [Devise](https://github.com/heartcombo/devise/blob/v5.0.4/lib/devise/models/authenticatable.rb#L225-L232) uses another approach. Its default `database_authenticatable` setup stores the user key together with `authenticatable_salt`, derived from the bcrypt password hash, and requires both to match. Reusing an integer user id for a different user is not enough to accept the old session.
 
